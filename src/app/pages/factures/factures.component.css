@@ -1,0 +1,246 @@
+.mat-drawer-container
+{
+    overflow: hidden !important;
+}
+
+.mat-drawer-content
+{
+    overflow: hidden !important;
+}
+
+.scroll-element
+{
+    height: 650px;
+    max-width: 100%;
+    overflow: auto;
+}
+
+::-webkit-scrollbar
+{
+  width: 4px;
+  border-radius: 20%;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background-color: #3f51b5;
+}
+
+.right-content
+{
+    height: 100%;
+}
+
+.left-navigation-panel {
+    width: 256px;
+    background-color: #EEE;
+}
+
+.toggle-button-left
+{
+    position: fixed;
+    bottom: 50px;
+    left: 100px;
+}
+
+.toggle-button-right
+{
+    position: fixed;
+    bottom: 50px;
+    left: 100px;
+    opacity: 0.15;
+    transition: opacity 0.75s;
+    display: none;
+}
+
+.toggle-button-right:hover
+{
+    opacity: 1;
+    position: fixed;
+    bottom: 50px;
+    left: 100px;
+    display: none;
+}
+
+.factures-width
+{
+    width: 98%;
+}
+
+.nav-button
+{
+    width: 100%;
+    height: 45px;
+    overflow: hidden;
+}
+
+.nav-button:hover
+{
+    cursor: pointer;
+    background-color: #DDD;
+    color: #3f51b5;
+}
+
+.nav-icon
+{
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+.nav-icon:hover
+{
+    color: #3f51b5;
+}
+
+h1
+{
+    padding: 32px;
+}
+
+.form-field
+{
+    margin-left: 32px;
+    width: 45%;
+    margin-right: 32px;
+}
+
+.date-picker
+{
+    margin-right: 32px;
+}
+
+.display-mode-icon
+{
+    margin-left: 16px;
+}
+
+.display-mode-icon:hover
+{
+    cursor: pointer;
+}
+
+.table-padding
+{
+    padding-left: 32px;
+    padding-top: 32px;
+}
+
+table
+{
+    width: 100%;
+    overflow: hidden;
+}
+
+tr {
+    border-bottom: 1px solid #DDD;
+    height: 45px;
+}
+
+tr:hover
+{
+    background-color: #DDD;
+    cursor: pointer;
+}
+
+.card
+{
+    width: 150px;
+    height: 220px;
+    background-color: #EEE;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.card:hover
+{
+    cursor: pointer;
+    background-color: #DDD;
+}
+
+.td-head {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.td-number {
+    height: 20px;
+    width: 100px;
+}
+
+.td-creator {
+    height: 20px;
+    width: 150px;
+}
+
+.td-sexe {
+    height: 20px;
+    width: 150px;
+}
+
+
+.td-client {
+    height: 20px;
+    width: 200px;
+}
+
+.td-email {
+    height: 20px;
+    width: 300px;
+}
+
+.td-payement {
+    height: 20px;
+    width: 200px;
+}
+
+.td-priceTTC {
+    height: 20px;
+    width: 300px;
+}
+
+.td-date {
+    height: 20px;
+    width: 200px;
+}
+
+.display-mode-icon-right {
+    padding-right: 16px;
+}
+
+.input-padding {
+    padding-left: 32px;
+}
+
+.caption
+{
+    display: block;
+    text-align: center;
+}
+
+.blockDate
+{
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 80px;
+    border: #241a1c;
+    opacity: 0.8;
+    border-width: 1px;
+    border-style: groove;
+}
+
+.parentBlockDate
+{
+  margin: 0px 30px;
+  display: block;
+}
+
+.parentBlockDate > *
+{
+    margin-right: 10px;
+}
+
+.dateclass {
+    margin-right: 15px;
+}

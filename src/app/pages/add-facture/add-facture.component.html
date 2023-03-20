@@ -1,0 +1,157 @@
+<div class="scroll-element">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div *ngIf="isEditMode;else other_content1">
+      <h1>Edition de la facture {{this.InvoiceDate.getFullYear().toString()}}-{{UtilityService.addLeadingZeros(FactureNumber,4)}}</h1>
+    </div>
+    <ng-template #other_content1>
+      <h1>Création de facture</h1>
+    </ng-template>
+
+    <p class="version">v1</p>
+
+  <button class="go-back" fxLayout="row" fxLayoutAlign="start center" mat-flat-button color="primary" (click)="RedirectTo()"><mat-icon>arrow_back</mat-icon>Retour</button><br>
+  </div>
+
+  <mat-checkbox class="input-padd input-S" [(ngModel)]="IsBusiness" (change)="IsBusinessUpdate()">Société</mat-checkbox>
+  <br>
+  <mat-checkbox class="input-padd input-S" [(ngModel)]="UserDoesntShareInfo" (change)="UserDoesntShareInfoUpdate()">Client particulier</mat-checkbox>
+
+  <div *ngIf= "!UserDoesntShareInfo">
+  <div *ngIf= "!IsBusiness; else business">
+  <mat-form-field appearance="outline" class="input-padd input-L" >
+    <mat-label>Nom du client</mat-label>
+      <input matInput placeholder="Nom du client" [(ngModel)]="ClientLastName" type="text" name="a" (change)="FieldsUpdated()" required>
+  </mat-form-field><br>
+
+  <mat-form-field appearance="outline" class="input-padd input-L" >
+    <mat-label>Prénom du client</mat-label>
+      <input matInput placeholder="Prénom du client" [(ngModel)]="ClientFirstName" type="text" name="b" (change)="FieldsUpdated()" required>
+  </mat-form-field><br>
+
+
+  <mat-form-field appearance="outline" class="input-padd input-L" >
+    <mat-label>Sexe</mat-label>
+    <mat-select [(ngModel)]="ClientSexe" name="d" (change)="FieldsUpdated()" required>
+      <mat-option *ngFor="let sexe of sexes" [value]="sexe.value">
+        {{sexe.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field><br>
+
+  <mat-form-field appearance="outline" class="input-padd input-L" >
+    <mat-label>Adresse du client</mat-label>
+    <input matInput placeholder="Adresse du client" [(ngModel)]="ClientAddress" type="text" name="c" (change)="FieldsUpdated()" required>
+  </mat-form-field>
+
+  <div class="pair-div" fxLayout="row"  fxLayoutAlign="start center">
+    <mat-form-field appearance="outline" class="input-padd input-S" >
+      <mat-label>Code Postal du client</mat-label>
+      <input matInput placeholder="Code Postal" [(ngModel)]="ClientZipCode" type="number" name="d" maxlength="10" (change)="FieldsUpdated()" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input-padd input-S" >
+      <mat-label>Ville du client</mat-label>
+      <input matInput placeholder="Ville" [(ngModel)]="ClientCity" type="text" name="e" (change)="FieldsUpdated()" required>
+    </mat-form-field>
+  </div>
+ <br>
+  <mat-form-field appearance="outline" class="input-padd input-L" >
+    <mat-label>Email du client</mat-label>
+    <input matInput placeholder="Email du client" [(ngModel)]="ClientEmail" type="text" name="f" (change)="FieldsUpdated()" required>
+  </mat-form-field>
+
+  </div>
+
+  <ng-template #business>
+    <mat-form-field appearance="outline" class="input-padd input-L" >
+      <mat-label>Nom de la société</mat-label>
+        <input matInput placeholder="Nom de la société" [(ngModel)]="ClientLastName" type="text" name="a" (change)="FieldsUpdated()" required>
+    </mat-form-field><br>
+
+    <mat-form-field appearance="outline" class="input-padd input-L" >
+      <mat-label>Adresse de la société</mat-label>
+      <input matInput placeholder="Adresse de la société" [(ngModel)]="ClientAddress" type="text" name="c" (change)="FieldsUpdated()" required>
+    </mat-form-field>
+
+    <div class="pair-div" fxLayout="row"  fxLayoutAlign="start center">
+      <mat-form-field appearance="outline" class="input-padd input-S" >
+        <mat-label>Code Postal de la société</mat-label>
+        <input matInput placeholder="Code Postal de la société" [(ngModel)]="ClientZipCode" type="number" name="d" maxlength="10" (change)="FieldsUpdated()" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-padd input-S" >
+        <mat-label>Ville de la société</mat-label>
+        <input matInput placeholder="Ville de la société" [(ngModel)]="ClientCity" type="text" name="e" (change)="FieldsUpdated()" required>
+      </mat-form-field>
+    </div>
+   <br>
+    <mat-form-field appearance="outline" class="input-padd input-L" >
+      <mat-label>Email de la société</mat-label>
+      <input matInput placeholder="Email de la société" [(ngModel)]="ClientEmail" type="text" name="f" (change)="FieldsUpdated()" required>
+    </mat-form-field>
+  </ng-template>
+</div>
+
+  <div class="pair-div" fxLayout="row"  fxLayoutAlign="start center">
+    <mat-form-field appearance="outline" class="input-padd input-S" >
+        <mat-label>Date de la facture</mat-label>
+        <input matInput [(ngModel)]="InvoiceDate" [matDatepicker]="picker" (dateChange)="FieldsUpdated()" required>
+        <mat-hint>jj/mm/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-padd input-S" >
+        <mat-label>Remise totale</mat-label>
+        <input matInput placeholder="20%" [(ngModel)]="InvoiceDiscount" type="number" (change)="FieldsUpdated()" name="f">
+      </mat-form-field>
+    </div>
+
+  <div  *ngFor="let line of linesInvoice; let index = index">
+    <div class="libelle">  </div>
+    <mat-form-field appearance="outline" class="input-padd input-L" >
+      <mat-label>Libellé n°{{ index + 1 }}</mat-label>
+      <textarea matInput [(ngModel)]='line.libelle' placeholder="" (change)="FieldsUpdated()" required></textarea>
+    </mat-form-field>
+
+    <div class="pair-div" fxLayout="row"  fxLayoutAlign="start center">
+      <mat-form-field appearance="outline" class="input-padd input-S" >
+        <mat-label>Quantité</mat-label>
+        <input matInput type="number" name="quantity" [(ngModel)]="line.quantity" placeholder="Quantité" (change)="FieldsUpdated()" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="input-padd input-S" >
+        <mat-label>Prix Unitaire TTC</mat-label>
+        <input matInput type="number" name="price" [(ngModel)]="line.priceTTC" placeholder="Prix TTC" (change)="FieldsUpdated()" required>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" class="input-padd input-L" >
+      <mat-label>Méthode de paiement</mat-label>
+      <mat-select [(ngModel)]="line.paymentType" name="d" (selectionChange)="FieldsUpdated()" required>
+        <mat-option *ngFor="let payment of paymentMethods" [value]="payment.value">
+          {{payment.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!--<textarea matInput [(ngModel)]='line.libelle' placeholder="Libellé (Ex : Peugeot 3008)" (change)="FieldsUpdated()" required></textarea>-->
+    <div fxLayout="row" fxLayoutAlign="end center" >
+      <button class="le-pad" mat-flat-button color="warn" (click)="removeLine(index)"><mat-icon class="no-style">delete</mat-icon></button>
+    </div>
+  </div>
+
+  <button fxLayout="row" fxLayoutAlign="start center" mat-flat-button color="primary" (click)="addNewLine()"><mat-icon>add</mat-icon>Ajouter une ligne de facture</button><br>
+  <button fxLayout="row" fxLayoutAlign="start center" mat-flat-button color="primary" (click)="PreviewPdf()"><mat-icon>visibility</mat-icon>Prévisualiser le PDF</button><br>
+
+  <div *ngIf="isEditMode;else other_content">
+    <mat-checkbox class="input-padd input-L" [(ngModel)]="SendMailToUser" (change)="FieldsUpdated()">Renvoyer le mail au client</mat-checkbox>
+    <button fxLayout="row" fxLayoutAlign="start center" mat-flat-button color="primary" [disabled]="isNotPreviewed" (click)="EditPdf()">Modifier la facture<mat-icon class="arrow-icon">edit_note</mat-icon></button><br>
+  </div>
+
+  <ng-template #other_content>
+    <button fxLayout="row" fxLayoutAlign="start center" mat-flat-button color="primary" [disabled]="isNotPreviewed" (click)="CreatePdf()">Création et envoi de la facture<mat-icon class="arrow-icon">arrow_forward</mat-icon></button><br>
+  </ng-template>
+
+</div>
+
+<!--<iframe id="ifrm" style="width: 100%; height: 100%;"></iframe> -->

@@ -1,0 +1,113 @@
+<mat-drawer-container class="full-width-and-height" autosize>
+    <mat-drawer #drawer class="left-navigation-panel" mode="side">
+        <div class="nav-button" fxLayout="row" fxLayoutAlign="start center" >
+            <mat-icon class="nav-icon">person</mat-icon>
+            Utilisateurs
+        </div>
+        <div class="nav-button" fxLayout="row" fxLayoutAlign="start center" >
+            <mat-icon class="nav-icon">settings_application</mat-icon>
+            Templates
+        </div>
+        <div class="nav-button" fxLayout="row" fxLayoutAlign="start center" >
+            <mat-icon class="nav-icon">receipt_long</mat-icon>
+            Factures
+        </div>
+        <button class="toggle-button-left" type="button" color="primary" mat-fab (click)="drawer.toggle()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-drawer>
+
+    <div class="right-content" fxLayout="row">
+        <div class="full-height factures-width">
+            <button class="toggle-button-right" type="button" color="primary" mat-fab (click)="drawer.toggle()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+            <div class="full-width-and-height">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                <h1>Liste des factures / {{firstName}}</h1><p class="version">v1</p><mat-icon class="display-mode-icon" (click)="SignOut()">logout</mat-icon>
+                </div>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Chercher une facture</mat-label>
+                    <input matInput type="text" [(ngModel)]="search" (ngModelChange)="searchFacture()">
+                    <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''; searchFacture()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field><br>
+                <!--<mat-icon class="display-mode-icon" (click)="listMode()">list</mat-icon>-->
+                <!--<mat-icon class="display-mode-icon" (click)="gridMode()">grid_view</mat-icon>-->
+                <mat-form-field class="date-picker input-padding" name="selector" ngDefaultControl appearance="outline">
+                    <mat-label>Rechercher sur</mat-label>
+                    <mat-select [(ngModel)]="searchOn" (ngModelChange)="searchFacture()">
+                      <mat-option value="">Aucun filtre</mat-option>
+                      <mat-option value="facture">Numéro</mat-option>
+                      <mat-option *ngIf="isAdmin" value="creator">Créateur</mat-option>
+                      <mat-option value="client-sexe">Sexe</mat-option>
+                      <mat-option value="client-name">Client</mat-option>
+                      <mat-option value="client-email">Email</mat-option>
+                      <mat-option value="payement">Paiement</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+                <mat-form-field  class="input-padding" appearance="outline">
+                    <mat-label>Sélectionner vos dates</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date" [(ngModel)]="startDate" (ngModelChange)="searchOnDate()">
+                      <input matEndDate placeholder="End date" [(ngModel)]="endDate" (ngModelChange)="searchOnDate()">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+                <mat-icon class="input-padding" routerLink="/addFacture/0">add</mat-icon>
+                <mat-icon class="display-mode-icon" (disabled)="factures.length === 0" (click)="downloadFactures()">download</mat-icon>
+                <mat-icon *ngIf="isAdmin" class="display-mode-icon" id="history"  routerLink="/historiques" >history</mat-icon>
+                <div *ngIf="isAdmin" class ="parentBlockDate">
+                <span class="blockDate"><mat-icon class="display-mode-icon dateclass" (click)="SearchByPeriod(period.Today)">calendar_today</mat-icon><span class="caption">Ajd</span></span>
+                <span class="blockDate"><mat-icon class="display-mode-icon dateclass" (click)="SearchByPeriod(period.Yesterday)">calendar_today</mat-icon><span class="caption">Hier</span></span>
+                <span class="blockDate"><mat-icon class="display-mode-icon dateclass" (click)="SearchByPeriod(period.Last7Days)">calendar_today</mat-icon><span class="caption">7 d. jours</span></span>
+                <span class="blockDate"><mat-icon class="display-mode-icon dateclass" (click)="SearchByPeriod(period.Last30Days)">calendar_today</mat-icon><span class="caption">30 d. jours</span></span>
+                <span class="blockDate"><mat-icon class="display-mode-icon dateclass" (click)="SearchByPeriod(period.CurrentMonth)">calendar_today</mat-icon><span class="caption">Ce mois-ci</span></span>
+                <span class="blockDate"><mat-icon class="display-mode-icon dateclass" (click)="SearchByPeriod(period.PreviousMonth)">calendar_today</mat-icon><span class="caption">Mois dernier</span></span>
+                <!--<span class="blockDate"><mat-icon class="display-mode-icon dateclass" (click)="SearchByPeriod(period.CurrentYear)">calendar_today</mat-icon><span class="caption">Cette année</span></span>-->
+                </div>
+                <div *ngIf="displayMode === 'list'" class="table-padding">
+                    <table>
+                        <div class="scroll-element">
+                            <tr fxLayoutAlign="start center">
+                                <td class="td-number td-head ">Numéro</td>
+                                <td *ngIf="isAdmin" class="td-creator td-head ">Créateur</td>
+                                <td class="td-sexe td-head ">Sexe</td>
+                                <td class="td-client td-head ">Client</td>
+                                <td class="td-email td-head ">Email</td>
+                                <td class="td-payement td-head ">Paiement</td>
+                                <td class="td-priceTTC td-head "> {{getPriceColumnStr()}} </td>
+                                <td class="td-date td-head ">Date</td>
+                            </tr>
+                            <div *ngFor="let facture of factures; index as i;">
+                                <tr fxLayoutAlign="start center" >
+                                    <td class="td-number">{{ getCurrentYearOfFacture(facture) }}-{{ UtilityService.addLeadingZeros(facture.factureNumber, 4)}}</td>
+                                    <td *ngIf="isAdmin" class="td-creator">{{ facture?.creator }}</td>
+                                    <td class="td-sexe">{{ Capitalize(facture?.clientSexe!) }}</td>
+                                    <td class="td-client">{{ facture?.clientFirstName}} {{ facture?.clientLastName }}</td>
+                                    <td class="td-email">{{ facture?.clientMail }}</td>
+                                    <td class="td-payement">{{ GetPaymentType(facture) }}</td>
+                                    <td class="td-priceTTC"> {{ getPriceTTC(i)}} </td>
+                                    <td class="td-date">{{ UtilityService.getDateStrWithHour(facture.date) }}</td>
+                                    <td class="td-preview"><mat-icon class="display-mode-icon" (click)="PreviewFacture(i)">remove_red_eye</mat-icon></td>
+                                    <td class="td-download"><mat-icon class="display-mode-icon-right" (click)="DownloadFacture(i)">download</mat-icon></td>
+                                    <td *ngIf="isAdmin" class="td-modify"><mat-icon class="display-mode-icon-right" routerLink="/addFacture/{{facture?.factureId}}">mode_edit</mat-icon></td>
+                                </tr>
+                            </div>
+                    </div>
+                    </table>
+                </div>
+                <div *ngIf="displayMode === 'grid'" class="table-padding">
+                    <div *ngFor="let facture of factures" class="card">
+                        {{ facture.factureNumber }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="full-height user-width" *ngIf="false">
+            User
+        </div>
+    </div>
+</mat-drawer-container>

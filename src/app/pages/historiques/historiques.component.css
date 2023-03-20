@@ -1,0 +1,126 @@
+h1
+{
+    padding: 32px;
+}
+
+ul {
+    list-style-type: circle;
+}
+
+
+.scroll-element
+{
+    height: 100%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+::-webkit-scrollbar
+{
+  width: 4px;
+  border-radius: 20%;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background-color: #3f51b5;
+}
+
+.go-back
+{
+    margin-right: 0px;
+}
+
+.table-padding
+{
+    padding-left: 32px;
+    padding-top: 32px;
+}
+
+table
+{
+    width: 100%;
+    overflow: hidden;
+}
+
+tr {
+    border-bottom: 1px solid #DDD;
+    height: 50px;
+}
+
+.oldVal
+{
+    margin-right: 20px;
+    border-right:2px solid #DDD;
+    border-spacing:10px;
+    padding-right: 20px;
+}
+
+tr:hover
+{
+    background-color: #DDD;
+    cursor: pointer;
+}
+
+
+.card
+{
+    width: 150px;
+    height: 220px;
+    background-color: #EEE;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.card:hover
+{
+    cursor: pointer;
+    background-color: #DDD;
+}
+
+.td-head {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.td-date {
+    height: 20px;
+    width: 200px;
+}
+
+.td-creator {
+    height: 20px;
+    width: 200px;
+}
+
+
+.td-factureNumber {
+    height: 20px;
+    width: 200px;
+}
+
+.td-changes {
+    height: 20px;
+}
+
+.flex-container
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.changeElem
+{
+    padding-top: 100px;
+}
+
+.oldVal
+{
+    color:red
+}
+
+.newVal
+{
+    color:green
+}

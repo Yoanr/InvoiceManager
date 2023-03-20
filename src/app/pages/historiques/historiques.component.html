@@ -1,0 +1,35 @@
+<div class="scroll-element">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <h1>Historique </h1><p class="version">v1</p>
+        </div>
+    <button class="go-back" fxLayout="row" fxLayoutAlign="start center" mat-flat-button color="primary" (click)="RedirectTo()"><mat-icon>arrow_back</mat-icon>Retour</button><br>
+
+          <div class="table-padding">
+            <table>
+                <div class="scroll-element">
+                    <tr fxLayoutAlign="start center">
+                        <td class="td-date td-head ">Date</td>
+                        <td class="td-creator td-head ">Utilisateur</td>
+                        <td class="td-factureNumber td-head ">Numéro de Facture</td>
+                        <td class="td-changes td-head ">Modifications</td>
+                    </tr>
+                    <div *ngFor="let historique of Historiques; index as i;">
+                        <tr fxLayoutAlign="start center" class="trline" >
+                            <td class="td-date">{{ UtilityService.getDateStr(historique.date) }}</td>
+                            <td class="td-creator">{{ historique?.creator }}</td>
+                            <td class="td-factureNumber">{{ historique?.factureYear }}-{{ historique?.factureNumber}}</td>
+                            <td class="td-changes">
+                                <div class="flex-container"  fxLayout="row" *ngFor="let change of historique?.changes">
+                                        {{ change.field }} : <p class="oldVal">{{ change?.oldValue }}</p>  <p class="newVal">{{ change?.newValue }}</p>
+                                </div>
+                            </td>
+
+                            <!--<td class="td-preview"><mat-icon class="display-mode-icon" (click)="PreviewFacture(i)">remove_red_eye</mat-icon></td>
+                            <td class="td-download"><mat-icon class="display-mode-icon-right" (click)="DownloadFacture(i)">download</mat-icon></td>
+                            <td *ngIf="isAdmin" class="td-modify"><mat-icon class="display-mode-icon-right" routerLink="/addFacture/{{facture?.factureId}}">mode_edit</mat-icon></td>-->
+                        </tr>
+                    </div>
+            </div>
+        </table>
+        </div>
+   </div>

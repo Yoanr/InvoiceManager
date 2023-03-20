@@ -1,0 +1,103 @@
+h1
+{
+    padding: 32px;
+}
+
+.scroll-element
+{
+    height: 99%;
+    max-width: 100%;
+    overflow: auto;
+}
+
+::-webkit-scrollbar
+{
+  width: 4px;
+  border-radius: 20%;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background-color: #3f51b5;
+}
+
+.input-padd
+{
+    padding-left: 32px;
+}
+
+.input-L {
+    width: 80%;
+    max-width: 330px;
+}
+
+@media (min-width: 319px) {
+    .input-S {
+        width: 35%;
+    }
+}
+
+@media (min-width: 374px) {
+    .input-S {
+        width: 40%;
+    }
+}
+
+@media (min-width: 424px) {
+    .input-S {
+        width: 45%;
+    }
+}
+
+.pair-div
+{
+    max-width: 330px !important;
+}
+
+button {
+    margin-left: 32px;
+    margin-top: 10px;
+}
+
+mat-icon {
+    font-size: 16px;
+    text-align: center;
+    width: 16px;
+    height: 17px;
+    padding-right: 8px;
+}
+
+.arrow-icon {
+    padding-right: 0px;
+    padding-left: 8px;
+}
+
+.libelle
+{
+    width: 90%;
+    border-top: 1px solid #DDD;
+    margin: auto;
+    padding-top: 32px;
+}
+
+.bot-input
+{
+    padding: 0;
+}
+
+.no-style
+{
+    margin: 0px !important;
+}
+
+.le-pad
+{
+    margin-right: 60px;
+    margin-bottom: 32px;
+    margin-top: -8px;
+}
+
+.go-back
+{
+    margin-right: 0px;
+}
